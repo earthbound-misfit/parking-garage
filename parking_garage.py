@@ -1,17 +1,16 @@
 class ParkingGarage():
-    tickets = 20
-    parking_spaces = 20
+    ticketPrice = 25
+    tickets = 50
+    parking_spaces = 50
 
-    def __init__(self,current_ticket=False):
+    def __init__(self, current_ticket=False):
         self.current_ticket = current_ticket
-        
 
     def takeTicket(self):
-        self.tickets -= 1
-        self.parking_spaces -=1
+        ParkingGarage.tickets -= 1
+        ParkingGarage.parking_spaces -= 1
     
     def payForParking(self):
-        ticketPrice = 25
         total_paid = 0
         pay = input("One ticket is $25.\nAdd Cash Amount in Dollars OR Insert Credit Card (Enter 'C'): ")
         if pay.lower() == 'c':
@@ -20,8 +19,8 @@ class ParkingGarage():
             print("Your ticket has been paid. You have 15 minutes to leave.")
             self.leaveGarage()
         elif pay.isdigit():
-            if ticketPrice > int(pay):
-                balanceOwed = ticketPrice - int(pay)
+            if ParkingGarage.ticketPrice > int(pay):
+                balanceOwed = ParkingGarage.ticketPrice - int(pay)
                 complete_payment = input(f"Enter ${balanceOwed} (in # of dollars): ")
                 total_paid = int(pay) + balanceOwed
                 if total_paid == balanceOwed + int(pay):
@@ -29,12 +28,12 @@ class ParkingGarage():
                     self.current_ticket == True
                     self.leaveGarage()
                 elif total_paid < balanceOwed + int(pay):
-                    balanceOwed = ticketPrice - (int(pay) + int(complete_payment))
+                    balanceOwed = ParkingGarage.ticketPrice - (int(pay) + int(complete_payment))
                     print(balanceOwed)
                     self.payForParking()
 
-            elif int(pay) > ticketPrice:
-                changeBack = int(pay) - ticketPrice
+            elif int(pay) > ParkingGarage.ticketPrice:
+                changeBack = int(pay) - ParkingGarage.ticketPrice
                 print(f'You will receive ${changeBack} back in change.')
                 self.leaveGarage()
                 self.current_ticket == True
@@ -47,9 +46,12 @@ class ParkingGarage():
             self.payForParking()
 
     def leaveGarage(self):
-        ParkingGarage.tickets += 1
-        ParkingGarage.parking_spaces +=1
-        print("Thank You, have a nice day")
+        if self.current_ticket == False:
+            self.payForParking()
+        else:
+            ParkingGarage.tickets += 1
+            ParkingGarage.parking_spaces += 1
+            print("Thank You, have a nice day")
         
                 # Once paid, display message "Thank you, have a nice day!"
         # Update parkingSpaces list to increase by 1 (meaning add to the parkingSpaces list)
@@ -57,9 +59,39 @@ class ParkingGarage():
    # pass
 
 
-newCustomer = ParkingGarage()
-newCustomer.takeTicket()
-newCustomer.payForParking()
+Customer1 = ParkingGarage()
+
+Customer2 = ParkingGarage()
+
+Customer1.takeTicket()
+Customer2.takeTicket()
+
+print(ParkingGarage.tickets)
+print(ParkingGarage.parking_spaces)
+
+
+Customer1.payForParking()
+Customer2.payForParking()
+
+print(ParkingGarage.tickets)
+print(ParkingGarage.parking_spaces)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
